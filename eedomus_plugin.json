@@ -1,0 +1,153 @@
+﻿{
+	"plugin_id": "ipx800v4x4fp",
+	"name_fr": "Extension fil pilote X-4FP",
+	"icon": "x4fp.png",
+	"version": "1.0",
+	"creation_date": "2017-09-29",
+	"modification_date": "2017-09-29",
+	"author": "Influman",
+	"description_fr": "Contrôlez l'<a target='_blank' href='http://gce-electronics.com/fr/carte-relais-ethernet-module-rail-din/1127-extension-fil-pilote-x-4fp-ipx800-v4.html'>extension fil pilote X-4FP</a> pour l'IPX800 V4",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "http://forum.eedomus.com/viewtopic.php?f=50&t=5942",
+	"parameters":
+  [
+		{
+			"parameter": "IP", 
+			"description": "Adresse IP locale de votre IPX800v4",
+			"xtype": "textfield",
+			"default_value": "192.168.0.",
+			"field": "width:130, allowBlank:false, maskRe:/[0-9.]/, regex:/^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/, regexText:'Adresse IP invalide [0-255].[0-255].[0-255].[0-255]'"
+    },
+{
+			"parameter": "num_extension", 
+			"description": "Numéro extension X-4FP (1-4)",
+			"xtype": "combo",
+			"field": "width:40, allowBlank:false, store:[1,2,3,4], editable: false, shadow: true, triggerAction: 'all', typeAhead:true"
+    }
+     
+  ],
+	"scripts":"",
+	"devices":
+  [
+		{
+			"device_id": "extzone1",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "Chauffage - Zone 1",
+			"icon": "chauffage.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.num_extension",
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "http://[VAR1]/user/status.xml",
+				"RAW_XPATH": "/response/x4fp[VAR2]1",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "5", "description": "Confort-2", "icon": "chauffage_m2.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=1&FpCmd=[RAW_VALUE]" },
+				{ "value": "4", "description": "Confort-1", "icon": "chauffage_m1.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=1&FpCmd=[RAW_VALUE]" },
+				{ "value": "0", "description": "Confort", "icon": "chauffage.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=1&FpCmd=[RAW_VALUE]" },
+				{ "value": "1", "description": "Eco", "icon": "chauffage_eco.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=1&FpCmd=[RAW_VALUE]" },
+				{ "value": "2", "description": "Hors-Gel", "icon": "chauffage_hg.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=1&FpCmd=[RAW_VALUE]" },
+				{ "value": "3", "description": "Arrêt", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=1&FpCmd=[RAW_VALUE]" },
+				{ "value": "255", "description": "n/a", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": ""}
+			]
+    },
+{
+			"device_id": "extzone2",
+			"parent_id": "extzone1",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "Chauffage - Zone 2",
+			"icon": "chauffage.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.num_extension",
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "http://[VAR1]/user/status.xml",
+				"RAW_XPATH": "/response/x4fp[VAR2]2",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "5", "description": "Confort-2", "icon": "chauffage_m2.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=2&FpCmd=[RAW_VALUE]" },
+				{ "value": "4", "description": "Confort-1", "icon": "chauffage_m1.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=2&FpCmd=[RAW_VALUE]" },
+				{ "value": "0", "description": "Confort", "icon": "chauffage.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=2&FpCmd=[RAW_VALUE]" },
+				{ "value": "1", "description": "Eco", "icon": "chauffage_eco.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=2&FpCmd=[RAW_VALUE]" },
+				{ "value": "2", "description": "Hors-Gel", "icon": "chauffage_hg.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=2&FpCmd=[RAW_VALUE]" },
+				{ "value": "3", "description": "Arrêt", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=2&FpCmd=[RAW_VALUE]" },
+				{ "value": "255", "description": "n/a", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": ""}
+			]
+    },
+{
+			"device_id": "extzone3",
+			"parent_id": "extzone1",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "Chauffage - Zone 3",
+			"icon": "chauffage.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.num_extension",
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "http://[VAR1]/user/status.xml",
+				"RAW_XPATH": "/response/x4fp[VAR2]3",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "5", "description": "Confort-2", "icon": "chauffage_m2.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=3&FpCmd=[RAW_VALUE]" },
+				{ "value": "4", "description": "Confort-1", "icon": "chauffage_m1.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=3&FpCmd=[RAW_VALUE]" },
+				{ "value": "0", "description": "Confort", "icon": "chauffage.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=3&FpCmd=[RAW_VALUE]" },
+				{ "value": "1", "description": "Eco", "icon": "chauffage_eco.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=3&FpCmd=[RAW_VALUE]" },
+				{ "value": "2", "description": "Hors-Gel", "icon": "chauffage_hg.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=3&FpCmd=[RAW_VALUE]" },
+				{ "value": "3", "description": "Arrêt", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=3&FpCmd=[RAW_VALUE]" },
+				{ "value": "255", "description": "n/a", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": ""}
+			]
+    },
+{
+			"device_id": "extzone4",
+			"parent_id": "extzone1",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "Chauffage - Zone 4",
+			"icon": "chauffage.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.num_extension",
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "http://[VAR1]/user/status.xml",
+				"RAW_XPATH": "/response/x4fp[VAR2]4",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "5", "description": "Confort-2", "icon": "chauffage_m2.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=4&FpCmd=[RAW_VALUE]" },
+				{ "value": "4", "description": "Confort-1", "icon": "chauffage_m1.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=4&FpCmd=[RAW_VALUE]" },
+				{ "value": "0", "description": "Confort", "icon": "chauffage.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=4&FpCmd=[RAW_VALUE]" },
+				{ "value": "1", "description": "Eco", "icon": "chauffage_eco.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=4&FpCmd=[RAW_VALUE]" },
+				{ "value": "2", "description": "Hors-Gel", "icon": "chauffage_hg.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=4&FpCmd=[RAW_VALUE]" },
+				{ "value": "3", "description": "Arrêt", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": "?Set4FP=[VAR2]&FpZone=4&FpCmd=[RAW_VALUE]" },
+				{ "value": "255", "description": "n/a", "icon": "chauffage_off.png", "http_url": "http://[VAR1]/user/api.cgi", "http_type": "GET",  "http_params": ""}
+			]
+    }
+  ]
+}
+
+
